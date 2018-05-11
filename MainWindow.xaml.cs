@@ -23,6 +23,9 @@ namespace Rogue_II
     public partial class MainWindow : Window
     {
         GameState gamestate;
+        
+        
+        
         //All for the Intro - Ignore
         Random r = new Random();
         Point ackbarPos = new Point(355, 800);
@@ -38,6 +41,9 @@ namespace Rogue_II
         double textwidth = 800;
         int otherCounter = 0;
         bool IntroHasRun = false;
+        //Intro Variables Over
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +52,7 @@ namespace Rogue_II
                 PlayIntro();
             }
         }
+        //Initializes and Runs the Intro- Ends with the song or the escape key
         private void PlayIntro()
         {
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100 / 60);
@@ -78,6 +85,7 @@ namespace Rogue_II
                 music.Play();
             }
         }
+        //Runs intro at 60fps
         private void tick(object sender, EventArgs e)
         {
                 delay++;
@@ -110,13 +118,14 @@ namespace Rogue_II
                     if (Keyboard.IsKeyDown(Key.Escape))
                     {
                         music.Stop();
-                    gamestate = GameState.GameOn;
+                        gamestate = GameState.GameOn;
                         scrollingText.Visibility = Visibility.Hidden;
                         ackbar.Visibility = Visibility.Hidden;
                     }
                 }
             
         }
+        //Is Called when song ends
         private void IntroOver(object sender, EventArgs e)
         {
             music.Stop();
