@@ -29,8 +29,8 @@ namespace Rogue_II
         
         //All for the Intro - Ignore
         Random r = new Random();
-        Point ackbarPos = new Point(355, 800);
-        Point TextPos = new Point(0, 929);
+        Point ackbarPos = new Point(555, 800);
+        Point TextPos = new Point(200, 929);
         Rectangle ackbar;
         MediaPlayer music = new MediaPlayer();
         DispatcherTimer timer = new DispatcherTimer();

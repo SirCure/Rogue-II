@@ -57,7 +57,8 @@ namespace Rogue_II
             rectangle = new Rectangle();
             rectangle.Height = 10;
             rectangle.Width = 10;
-            rectangle.Fill = Brushes.White;
+            //rectangle.Fill = Brushes.White;
+            rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/StormtrooperForward.png")));
             canvas.Children.Add(rectangle);
             rectangle.Visibility = Visibility.Hidden;
         }
@@ -96,6 +97,7 @@ namespace Rogue_II
         {
             for(int i = 0;i<parray.Length;i++)
             {
+                //Point location = itemArray[i].pos
                 if(this.pos == parray[i])
                 {
 
