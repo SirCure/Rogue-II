@@ -28,7 +28,14 @@ namespace Rogue_II
         int GoldCount;
         int XP;
         int Collectibles;
+
         //Item[] Inventory = new Item[];
+        int meleeSlot = 0;
+        int rangedSlot = 1;
+        int helmetSlot = 2;
+        int chestSlot = 3;
+        int pantSlot = 4;
+
         bool hasForce = false;
         bool Alive = true;
         //ImageBrush PixelArt = new ImageBrush(new BitmapImage(new Uri()));
@@ -52,58 +59,68 @@ namespace Rogue_II
             rectangle.Width = 10;
             rectangle.Fill = Brushes.White;
             canvas.Children.Add(rectangle);
+            rectangle.Visibility = Visibility.Hidden;
         }
-        public void move()
+        public void move(Key key)
         {
-            if (Keyboard.IsKeyUp(Key.Left) && Keyboard.IsKeyUp(Key.Right) && Keyboard.IsKeyUp(Key.Up) && Keyboard.IsKeyUp(Key.Down))
-            {
-                counter = 0;
-            }
-            if (counter == 0)
-            {
-                if (Keyboard.IsKeyDown(Key.Up))
+                if (key == Key.Up)
                 {
                     pos.Y -= 10;
                     counter++;
                 }
-                if (Keyboard.IsKeyDown(Key.Down))
+                if (key == Key.Down)
                 {
                     pos.Y += 10;
                     counter++;
                 }
-                if (Keyboard.IsKeyDown(Key.Left))
+                if (key == Key.Left)
                 {
                     pos.X -= 10;
                     counter++;
                 }
-                if (Keyboard.IsKeyDown(Key.Right))
+                if (key == Key.Right)
                 {
                     pos.X += 10;
                     counter++;
                 }
                 Canvas.SetLeft(rectangle, pos.X);
                 Canvas.SetTop(rectangle, pos.Y);
-            }
         }
         //Change parameter to Map map
         public void reveal()
         {
 
         }
+        //Changed to Item[] itemArray
         public void itemPickUp(Point[] parray)
         {
+            for(int i = 0;i<parray.Length;i++)
+            {
+                if(this.pos == parray[i])
+                {
 
+                }
+            }
         }
         //Change to Enemy enemy
         public void melee()
         {
             
         }
-        public void ranged()
+        //Change to Enemy[] enemyArray, change 8 to enemyArray.Length
+        public void ranged(Point[] pArray)
         {
             if(Keyboard.IsKeyDown(Key.LeftShift)&&Keyboard.IsKeyDown(Key.A))
             {
-
+                for(int i = 0;i<pArray.Length;i++)
+                {
+                    Point location = pArray[i];
+                    if(this.pos.X == location.X&&this.pos.Y>location.Y&&location.Y+20>=this.pos.Y)
+                    {
+                      //int dmg = Inventory[rangedSlot].dmg
+                      //enemyArray[i].Health -=dmg;+
+                    }
+                }
             }
         }
         //Change to Map map

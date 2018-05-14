@@ -22,9 +22,10 @@ namespace Rogue_II
     /// </summary>
     public partial class MainWindow : Window
     {
-        GameState gamestate;
-        
-        
+        GameState gamestate = GameState.StartScreen;
+        string[] songList = { "E:/13BinarySunsetAlternate/04 Emperor's Throne Room.mp3","E:/13BinarySunsetAlternate/03 Battle Of The Heroes.mp3", "E:/13BinarySunsetAlternate/02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "E:/13BinarySunsetAlternate/10 Mos Eisley Spaceport.mp3", "E:/13BinarySunsetAlternate/11 Cantina Band.mp3", "E:/13BinarySunsetAlternate/02 Duel Of The Fates.mp3", "E:/13BinarySunsetAlternate/12 Cantina Band #2.mp3" };
+
+        Player player;
         
         //All for the Intro - Ignore
         Random r = new Random();
@@ -51,6 +52,7 @@ namespace Rogue_II
             {
                 PlayIntro();
             }
+            player = new Player(canvas, this);
         }
         //Initializes and Runs the Intro- Ends with the song or the escape key
         private void PlayIntro()
@@ -88,6 +90,8 @@ namespace Rogue_II
         //Runs intro at 60fps
         private void tick(object sender, EventArgs e)
         {
+            if (gamestate == GameState.StartScreen)
+            {
                 delay++;
                 if (delay >= 3)
                 {
@@ -100,7 +104,7 @@ namespace Rogue_II
                         height -= 0.5 * 129 / 90;
                         width -= 0.5;
                         otherCounter = 0;
-                        if (scrollingText.FontSize >= 0.25)
+                        if (scrollingText.FontSize >= 0.50)
                         {
                             scrollingText.FontSize -= 0.25;
                         }
@@ -118,20 +122,59 @@ namespace Rogue_II
                     if (Keyboard.IsKeyDown(Key.Escape))
                     {
                         music.Stop();
+                        NextSong();
+                        music.MediaEnded += NextSongEvent;
                         gamestate = GameState.GameOn;
                         scrollingText.Visibility = Visibility.Hidden;
                         ackbar.Visibility = Visibility.Hidden;
+                        player.rectangle.Visibility = Visibility.Visible;
                     }
                 }
+            }
             
         }
-        //Is Called when song ends
+        //Is Called when intro song ends
         private void IntroOver(object sender, EventArgs e)
         {
             music.Stop();
+            NextSong();
+            music.MediaEnded += NextSongEvent;
             gamestate = GameState.GameOn;
             scrollingText.Visibility = Visibility.Hidden;
             ackbar.Visibility = Visibility.Hidden;
+            player.rectangle.Visibility = Visibility.Visible;
+        }
+        private void NextSong()
+        {
+            music.Stop();
+            int id = r.Next(0, songList.Length);
+            string songLink = songList[id];
+            window.Title = songLink;
+            music.Open(new Uri(songLink));
+            music.Play();
+        }
+        private void NextSongEvent(object sender, EventArgs e)
+        {
+            music.Stop();
+            int random = r.Next(0, songList.Length);
+            string songLink = songList[random];
+            window.Title = songLink;
+            music.Open(new Uri(songLink));
+            music.Play();
+        }
+        //Everything happens on a KeyDown Event
+        private void key(object sender,KeyEventArgs e)
+        {
+            if(gamestate == GameState.GameOn)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    NextSong();
+                }
+                //Console.WriteLine("KeyDown Event" + e.Key.ToString());
+                player.move(e.Key);
+            }
+            
         }
     }
 }
