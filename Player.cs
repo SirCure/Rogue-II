@@ -19,15 +19,15 @@ namespace Rogue_II
     class Player
     {
         //Stats
-        int Level;
-        int MaxStrength = 16;
-        int Strength;
-        int MaxHP = 12;
-        int HP;
-        int Armour = 4;
-        int GoldCount;
-        int XP;
-        int Collectibles;
+        public int Level;
+        public int MaxStrength = 16;
+        public int Strength;
+        public int MaxHP = 12;
+        public int HP;
+        public int Armour = 4;
+        public int GoldCount;
+        public int XP;
+        public int Collectibles;
 
         //Item[] Inventory = new Item[];
         int meleeSlot = 0;
@@ -55,10 +55,10 @@ namespace Rogue_II
             canvas = c;
             window = w;
             rectangle = new Rectangle();
-            rectangle.Height = 10;
-            rectangle.Width = 10;
+            rectangle.Height = 15;
+            rectangle.Width = 15;
             //rectangle.Fill = Brushes.White;
-            rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/StormtrooperForward.png")));
+            rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/@.png")));
             canvas.Children.Add(rectangle);
             rectangle.Visibility = Visibility.Hidden;
         }
@@ -86,6 +86,14 @@ namespace Rogue_II
                 }
                 Canvas.SetLeft(rectangle, pos.X);
                 Canvas.SetTop(rectangle, pos.Y);
+            /*if(Keyboard.IsKeyUp(Key.A)&& Keyboard.IsKeyUp(Key.D) && Keyboard.IsKeyUp(Key.S) && Keyboard.IsKeyUp(Key.W))
+            {
+                counter = 0;
+            }
+            else
+            {
+                counter = 1;
+            }*/
         }
         //Change parameter to Map map
         public void reveal()

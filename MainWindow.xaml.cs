@@ -26,6 +26,7 @@ namespace Rogue_II
         string[] songList = { "E:/13BinarySunsetAlternate/04 Emperor's Throne Room.mp3","E:/13BinarySunsetAlternate/03 Battle Of The Heroes.mp3", "E:/13BinarySunsetAlternate/02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "E:/13BinarySunsetAlternate/10 Mos Eisley Spaceport.mp3", "E:/13BinarySunsetAlternate/11 Cantina Band.mp3", "E:/13BinarySunsetAlternate/02 Duel Of The Fates.mp3", "E:/13BinarySunsetAlternate/12 Cantina Band #2.mp3" };
 
         Player player;
+        int Level = 1;
         
         //All for the Intro - Ignore
         Random r = new Random();
@@ -44,6 +45,14 @@ namespace Rogue_II
         bool IntroHasRun = false;
         //Intro Variables Over
 
+        //UI Elements
+        Label level;
+        Label gold;
+        Label strength;
+        Label exp;
+        Label hp;
+        Label armour;
+        //End of UI Elements
 
         public MainWindow()
         {
@@ -128,6 +137,7 @@ namespace Rogue_II
                         scrollingText.Visibility = Visibility.Hidden;
                         ackbar.Visibility = Visibility.Hidden;
                         player.rectangle.Visibility = Visibility.Visible;
+                        generateScreen();
                     }
                 }
             }
@@ -173,8 +183,85 @@ namespace Rogue_II
                 }
                 //Console.WriteLine("KeyDown Event" + e.Key.ToString());
                 player.move(e.Key);
+                screenUpdate();
             }
-            
+        }
+        private void generateScreen()
+        {
+            level = new Label();
+            level.FontFamily = new FontFamily("Times New Roman");
+            level.Width = 120;
+            level.Height = 40;
+            Canvas.SetLeft(level, 210);
+            Canvas.SetTop(level, 600);
+            level.Content = "Level:         " + Level;
+            level.Foreground = Brushes.White;
+            level.FontSize = 18;
+            canvas.Children.Add(level);
+
+            gold = new Label();
+            gold.FontFamily = new FontFamily("Times New Roman");
+            gold.Width = 120;
+            gold.Height = 40;
+            Canvas.SetLeft(gold, 330);
+            Canvas.SetTop(gold, 600);
+            gold.Content = "Gold:       " + player.GoldCount;
+            canvas.Children.Add(gold);
+            gold.FontSize = 18;
+            gold.Foreground = Brushes.White;
+
+            hp = new Label();
+            hp.FontFamily = new FontFamily("Times New Roman");
+            hp.Width = 120;
+            hp.Height = 40;
+            Canvas.SetLeft(hp, 450);
+            Canvas.SetTop(hp, 600);
+            hp.Content = "HP:  " + player.HP + "(  " + player.MaxHP + ")";
+            canvas.Children.Add(hp);
+            hp.FontSize = 18;
+            hp.Foreground = Brushes.White;
+
+            strength = new Label();
+            strength.FontFamily = new FontFamily("Times New Roman");
+            strength.Width = 120;
+            strength.Height = 40;
+            Canvas.SetLeft(strength, 570);
+            Canvas.SetTop(strength, 600);
+            strength.Content = "Str:  " + player.Strength + "(  " + player.MaxStrength + ")";
+            canvas.Children.Add(strength);
+            strength.FontSize = 18;
+            strength.Foreground = Brushes.White;
+
+            armour = new Label();
+            armour.FontFamily = new FontFamily("Times New Roman");
+            armour.Width = 120;
+            armour.Height = 40;
+            Canvas.SetLeft(armour, 690);
+            Canvas.SetTop(armour, 600);
+            armour.Content = "Arm:    " + player.Armour;
+            canvas.Children.Add(armour);
+            armour.FontSize = 18;
+            armour.Foreground = Brushes.White;
+
+            exp = new Label();
+            exp.FontFamily = new FontFamily("Times New Roman");
+            exp.Width = 120;
+            exp.Height = 40;
+            Canvas.SetLeft(exp, 810);
+            Canvas.SetTop(exp, 600);
+            exp.Content = "Exp: " + player.Level + "/      " + player.XP;
+            canvas.Children.Add(exp);
+            exp.FontSize = 18;
+            exp.Foreground = Brushes.White;
+        }
+        private void screenUpdate()
+        {
+            level.Content = "Level:         " + Level;
+            armour.Content = "Arm:    " + player.Armour;
+            exp.Content = "Exp: " + player.Level + "/      " + player.XP;
+            strength.Content = "Str:  " + player.Strength + "(  " + player.MaxStrength + ")";
+            hp.Content = "HP:  " + player.HP + "(  " + player.MaxHP + ")";
+            gold.Content = "Gold:       " + player.GoldCount;
         }
     }
 }
