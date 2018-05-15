@@ -23,14 +23,12 @@ namespace Rogue_II
         string tile;
         public int xPos;
         public int yPos = 0;
+        public string[,] grid = new string[12, 5];
+        int lineNumber = -1;
 
         public Map(Canvas C)
         {
             canvas = C;
-            //Sets size of rectangles.
-            //rectangle.Width = 10;
-            //rectangle.Height = 10;
-            //rectangle.StrokeThickness = 1;
         }
 
         //A method to generate a given map from the read file.
@@ -38,59 +36,45 @@ namespace Rogue_II
         {
             mapNum = mapLevel;
             mapNum = 0;
-            if (mapNum == 0)
-            {
-                StreamReader streamReader = new System.IO.StreamReader("hoth_map.txt");
-                while (!streamReader.EndOfStream)
-                {
-                    xPos = -10;
-                    yPos += 10;
-                    line = streamReader.ReadLine();
-                    for (int i = 0; i < line.Length; i++)
-                    {
-                        tile = line[i].ToString();
-                        xPos += 10;
-                        rectangle.Add(new Rectangle());
-                        rectangle[rectangle.Count - 1].Width = 10;
-                        rectangle[rectangle.Count - 1].Height = 10;
-                        rectangle[rectangle.Count - 1].StrokeThickness = 1;
-                        Canvas.SetLeft(rectangle[rectangle.Count - 1], xPos);
-                        Canvas.SetTop(rectangle[rectangle.Count - 1], yPos);
-                        if (tile == ".")
-                        {
-                            
-                            rectangle[rectangle.Count - 1].Fill = Brushes.Salmon;
-                            
-                        }
 
-                        if (tile == "|")
-                        {
-                            rectangle[rectangle.Count - 1].Fill = Brushes.Gray;
-                        }
-                        canvas.Children.Add(rectangle[rectangle.Count - 1]);
-                    }
+            //Generates a grid from the text file that can be read by other classes and used to generate the map.
+            StreamReader streamReader = new System.IO.StreamReader("map" + mapNum + ".txt");
+            while (!streamReader.EndOfStream)
+            {
+                lineNumber++;
+                line = streamReader.ReadLine();
+                for (int i = 0; i < line.Length; i++)
+                {
+                    tile = line[i].ToString();
+                    grid[i, lineNumber] = tile;
                 }
             }
 
-            if (mapNum == 1)
+            //Takes the values from the grid array and creates rectangles (which represent the map) on the screen.
+            for (int y = 0; y < 5; y++)
             {
+                for (int x = 0; x < 12; x++)
+                {
+                    xPos = (x * 10);
+                    yPos = (y * 10);
+                    rectangle.Add(new Rectangle());
+                    rectangle[rectangle.Count - 1].Width = 10;
+                    rectangle[rectangle.Count - 1].Height = 10;
+                    rectangle[rectangle.Count - 1].StrokeThickness = 1;
+                    Canvas.SetLeft(rectangle[rectangle.Count - 1], xPos);
+                    Canvas.SetTop(rectangle[rectangle.Count - 1], yPos);
+                    if (grid[x, y] == ".")
+                    {
+                        rectangle[rectangle.Count - 1].Fill = Brushes.Salmon;
+                    }
 
-            }
-
-            if (mapNum == 2)
-            {
-
-            }
-
-            if (mapNum == 3)
-            {
-
-            }
-
-            if (mapNum == 4)
-            {
-
-            }
+                    if (grid[x, y] == "|")
+                    {
+                        rectangle[rectangle.Count - 1].Fill = Brushes.Gray;
+                    }
+                    canvas.Children.Add(rectangle[rectangle.Count - 1]);
+                }
+            }           
         }
     }
 }
