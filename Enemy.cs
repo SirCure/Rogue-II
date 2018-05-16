@@ -13,8 +13,10 @@ namespace Rogue_II
 {
     class Enemy
     {
-        
+        Player player;
         Canvas canvas;
+        Map map;
+        int levelProgress = 1;
         Window window;
         //the point where the enemy is located
         Point enemyPos = new Point(x:1, y:1);
@@ -25,42 +27,45 @@ namespace Rogue_II
         int maxHP;
         int strength;
         int armour;
+        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("H:/My Documents/ICS3U/Unit 4/Rogue II/Rogue II/StormtrooperForward.png")));
         //higher level, more exp for player
         int level;
         int enemyType;
         bool alive = true;
+        
+        Random random = new Random();
         public Enemy (Canvas c, Window w)
         {
             canvas = c;
             window = w;
+            //System.IO.StreamReader streamReader = new System.IO.StreamReader("map" + levelProgress + ".txt");
             enemyRectangle = new Rectangle();
             enemyRectangle.Height = 100;
-            enemyRectangle.Width = 100;
-           
-            canvas.Children.Add(enemyRectangle);
-        }
-        public void stormtrooper(Canvas canvas, Window window)
-        {
-            enemyRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png")));
-            hp = 10;
-            maxHP = 20;
-            strength = 0;
-            armour = 0;
-            level = 2;
-            if(hp == 0)
-            {
-                alive = false;
+            enemyRectangle.Width = 100;  
+            if (levelProgress == 1)
+            {   //stormtrooper hoth
+                enemyRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
+                Canvas.SetLeft(enemyRectangle, 100);
+                hp = 10;
+                maxHP = 10;
+                strength = 12;
+                armour = 3;
+                int level = 1;
+                canvas.Children.Add(this.enemyRectangle);
+                
             }
-            if(alive == false)
-            {
-                enemyRectangle.Visibility = Visibility.Hidden;
-            }
-        }
 
-        public void enemyMove()
-        {
-
+            
         }
         
+        public void enemyMove()
+        {
+            
+        }
+        
+        public void death()
+        {
+            canvas.Children.Remove(enemyRectangle);
+        }
     }
 }
