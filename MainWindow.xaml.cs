@@ -52,6 +52,7 @@ namespace Rogue_II
         Label exp;
         Label hp;
         Label armour;
+        Rectangle controls;
         //End of UI Elements
 
         Item[] items = new Item[10];
@@ -63,6 +64,12 @@ namespace Rogue_II
                 PlayIntro();
             }
             player = new Player(canvas, this);
+            controls = new Rectangle();
+            controls.Visibility = Visibility.Hidden;
+            controls.Height = 800;
+            controls.Width = 1200;
+            controls.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/controls.png")));
+            canvas.Children.Add(controls);
         }
         //Initializes and Runs the Intro- Ends with the song or the escape key
         private void PlayIntro()
@@ -178,29 +185,49 @@ namespace Rogue_II
         //Everything happens on a KeyDown Event
         private void key(object sender,KeyEventArgs e)
         {
-            if(gamestate == GameState.GameOn)
+            if (e.Key == Key.F1)
             {
-                if(e.Key == Key.R)
+                if (controls.Visibility == Visibility.Hidden)
                 {
-                    //Rest
-                    if (player.Strength != player.MaxStrength)
+                    canvas.Children.Remove(controls);
+                    canvas.Children.Add(controls);
+                    controls.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    controls.Visibility = Visibility.Hidden;
+                }
+
+            }
+            else
+            {
+                if (gamestate == GameState.GameOn)
+                {
+                    if (e.Key == Key.R)
                     {
-                        player.Strength += 1;
+                        //Rest
+                        if (player.Strength != player.MaxStrength)
+                        {
+                            player.Strength += 1;
+                        }
+                        player.XP += 1;
                     }
+
+                    for (int i = 0; i < items.Length; i++)
+                    {
+                        Item it = items[i];
+                        //it.ItemVisibility(player);
+                        player.itemPickUp(it);
+                    }
+                    if (e.Key == Key.Enter)
+                    {
+                        NextSong();
+                    }
+                    //Console.WriteLine("KeyDown Event" + e.Key.ToString());
+                    player.move(e.Key);
+                    screenUpdate();
+                    player.XPUpdate();
                 }
-                for(int i = 0;i<items.Length;i++)
-                {
-                    Item it = items[i];
-                    //it.ItemVisibility(player);
-                    player.itemPickUp(it);
-                }
-                if (e.Key == Key.Enter)
-                {
-                    NextSong();
-                }
-                //Console.WriteLine("KeyDown Event" + e.Key.ToString());
-                player.move(e.Key);
-                screenUpdate();
             }
         }
         private void GenerateItems()

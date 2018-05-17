@@ -175,6 +175,15 @@ namespace Rogue_II
         {
 
         }
+        public void XPUpdate()
+        {
+            int previousXP = XP;
+            if(XP == (Level*Level*Level*Level))
+            {
+                XP = previousXP - Level * Level * Level * Level;
+                Level += 1;
+            }
+        }
 
     }
 }
