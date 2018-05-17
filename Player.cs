@@ -28,14 +28,16 @@ namespace Rogue_II
         public int GoldCount;
         public int XP;
         public int Collectibles;
+        public int RangedDmg;
 
-        //Item[] Inventory = new Item[];
-        int meleeSlot = 0;
-        int rangedSlot = 1;
+        int rangedSlot = 0;
+        int meleeSlot = 1;
         int helmetSlot = 2;
         int chestSlot = 3;
-        int pantSlot = 4;
+        int pantsSlot = 4;
+        int conSlot = 5;
 
+        Item[] Inventory = new Item[6];
         bool hasForce = false;
         bool Alive = true;
         //ImageBrush PixelArt = new ImageBrush(new BitmapImage(new Uri()));
@@ -55,8 +57,8 @@ namespace Rogue_II
             canvas = c;
             window = w;
             rectangle = new Rectangle();
-            rectangle.Height = 15;
-            rectangle.Width = 15;
+            rectangle.Height = 30;
+            rectangle.Width = 30;
             //rectangle.Fill = Brushes.White;
             rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/@.png")));
             canvas.Children.Add(rectangle);
@@ -66,34 +68,26 @@ namespace Rogue_II
         {
                 if (key == Key.Up)
                 {
-                    pos.Y -= 10;
+                    pos.Y -= 30;
                     counter++;
                 }
                 if (key == Key.Down)
                 {
-                    pos.Y += 10;
+                    pos.Y += 30;
                     counter++;
                 }
                 if (key == Key.Left)
                 {
-                    pos.X -= 10;
+                    pos.X -= 30;
                     counter++;
                 }
                 if (key == Key.Right)
                 {
-                    pos.X += 10;
+                    pos.X += 30;
                     counter++;
                 }
                 Canvas.SetLeft(rectangle, pos.X);
                 Canvas.SetTop(rectangle, pos.Y);
-            /*if(Keyboard.IsKeyUp(Key.A)&& Keyboard.IsKeyUp(Key.D) && Keyboard.IsKeyUp(Key.S) && Keyboard.IsKeyUp(Key.W))
-            {
-                counter = 0;
-            }
-            else
-            {
-                counter = 1;
-            }*/
         }
         //Change parameter to Map map
         public void reveal()
@@ -101,15 +95,58 @@ namespace Rogue_II
 
         }
         //Changed to Item[] itemArray
-        public void itemPickUp(Point[] parray)
+        public void itemPickUp(Item item)
         {
-            for(int i = 0;i<parray.Length;i++)
-            {
-                //Point location = itemArray[i].pos
-                if(this.pos == parray[i])
+                if(this.pos == item.pos&&item.rectangle.Visibility == Visibility.Visible)
                 {
-
+                    item.rectangle.Visibility = Visibility.Hidden;
+                    switch (item.type)
+                    {
+                        case Type.Melee:
+                            Inventory[meleeSlot] = item;
+                            break;
+                        case Type.Ranged:
+                            Inventory[rangedSlot] = item;
+                            break;
+                        case Type.Helmet:
+                            Inventory[helmetSlot] = item;
+                            break;
+                        case Type.Chestplate:
+                            Inventory[chestSlot] = item;
+                            break;
+                        case Type.Pants:
+                            Inventory[pantsSlot] = item;
+                            break;
+                        case Type.Consumable:
+                            Inventory[conSlot] = item;
+                            break;
+                        case Type.Gold:
+                            GoldCount += item.GoldCount;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            Armour = 4;
+            if (Inventory[meleeSlot]!=null)
+            {
+                MaxStrength = 16 + Inventory[meleeSlot].StrBoost;
+            }
+            if (Inventory[helmetSlot] != null)
+            {
+                Armour += Inventory[helmetSlot].ArmourBoost;
+            }
+            if(Inventory[chestSlot]!=null)
+            {
+                Armour += Inventory[chestSlot].ArmourBoost;
+            }
+            if(Inventory[pantsSlot]!=null)
+            {
+                Armour += Inventory[pantsSlot].ArmourBoost;
+            }
+            if (Inventory[rangedSlot] != null)
+            {
+                RangedDmg = Inventory[rangedSlot].RangedDmg;
             }
         }
         //Change to Enemy enemy

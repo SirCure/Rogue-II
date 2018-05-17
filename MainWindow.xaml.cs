@@ -54,6 +54,7 @@ namespace Rogue_II
         Label armour;
         //End of UI Elements
 
+        Item[] items = new Item[10];
         public MainWindow()
         {
             InitializeComponent();
@@ -138,6 +139,7 @@ namespace Rogue_II
                         ackbar.Visibility = Visibility.Hidden;
                         player.rectangle.Visibility = Visibility.Visible;
                         generateScreen();
+                        GenerateItems();
                     }
                 }
             }
@@ -172,11 +174,26 @@ namespace Rogue_II
             music.Open(new Uri(songLink));
             music.Play();
         }
+
         //Everything happens on a KeyDown Event
         private void key(object sender,KeyEventArgs e)
         {
             if(gamestate == GameState.GameOn)
             {
+                if(e.Key == Key.R)
+                {
+                    //Rest
+                    if (player.Strength != player.MaxStrength)
+                    {
+                        player.Strength += 1;
+                    }
+                }
+                for(int i = 0;i<items.Length;i++)
+                {
+                    Item it = items[i];
+                    //it.ItemVisibility(player);
+                    player.itemPickUp(it);
+                }
                 if (e.Key == Key.Enter)
                 {
                     NextSong();
@@ -184,6 +201,23 @@ namespace Rogue_II
                 //Console.WriteLine("KeyDown Event" + e.Key.ToString());
                 player.move(e.Key);
                 screenUpdate();
+            }
+        }
+        private void GenerateItems()
+        {
+            for(int i = 0;i<items.Length;i++)
+            {
+                Type type = (Type)r.Next(0, 7);
+                if (i==1)
+                {
+                    type = Type.Melee;
+                }
+                else if(i==0)
+                {
+                    type = Type.Collectible;
+                }
+                Point itempos = new Point(r.Next(0, 30)*30, r.Next(0,20)*30);
+                items[i] = new Item(canvas, this, itempos, type, Level);
             }
         }
         private void generateScreen()
