@@ -24,7 +24,7 @@ namespace Rogue_II
     {
         GameState gamestate = GameState.StartScreen;
         string[] songList = { "E:/13BinarySunsetAlternate/04 Emperor's Throne Room.mp3","E:/13BinarySunsetAlternate/03 Battle Of The Heroes.mp3", "E:/13BinarySunsetAlternate/02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "E:/13BinarySunsetAlternate/10 Mos Eisley Spaceport.mp3", "E:/13BinarySunsetAlternate/11 Cantina Band.mp3", "E:/13BinarySunsetAlternate/02 Duel Of The Fates.mp3", "E:/13BinarySunsetAlternate/12 Cantina Band #2.mp3" };
-
+        Enemy enemy;
         Player player;
         int Level = 1;
         
@@ -63,6 +63,7 @@ namespace Rogue_II
             {
                 PlayIntro();
             }
+            enemy = new Enemy(canvas, this);
             player = new Player(canvas, this);
             controls = new Rectangle();
             controls.Visibility = Visibility.Hidden;
@@ -145,6 +146,8 @@ namespace Rogue_II
                         scrollingText.Visibility = Visibility.Hidden;
                         ackbar.Visibility = Visibility.Hidden;
                         player.rectangle.Visibility = Visibility.Visible;
+                        enemy.enemyRectangle.Visibility = Visibility.Visible;
+                        enemy.minibossRectangle.Visibility = Visibility.Visible;
                         generateScreen();
                         GenerateItems();
                     }
