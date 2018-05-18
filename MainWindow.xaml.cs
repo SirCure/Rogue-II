@@ -27,7 +27,7 @@ namespace Rogue_II
         Enemy enemy;
         Player player;
         int Level = 1;
-        
+        Map map;
         //All for the Intro - Ignore
         Random r = new Random();
         Point ackbarPos = new Point(555, 800);
@@ -63,8 +63,7 @@ namespace Rogue_II
             {
                 PlayIntro();
             }
-            enemy = new Enemy(canvas, this);
-            player = new Player(canvas, this);
+            
             controls = new Rectangle();
             controls.Visibility = Visibility.Hidden;
             controls.Height = 800;
@@ -145,11 +144,13 @@ namespace Rogue_II
                         gamestate = GameState.GameOn;
                         scrollingText.Visibility = Visibility.Hidden;
                         ackbar.Visibility = Visibility.Hidden;
-                        player.rectangle.Visibility = Visibility.Visible;
-                        enemy.enemyRectangle.Visibility = Visibility.Visible;
-                        enemy.minibossRectangle.Visibility = Visibility.Visible;
-                        generateScreen();
                         GenerateItems();
+                        player = new Player(canvas, this);
+                        player.rectangle.Visibility = Visibility.Visible;
+                        generateScreen();
+                        map = new Map(canvas);
+                        map.generateMap(1);
+                        enemy = new Enemy(canvas, this);
                     }
                 }
             }
@@ -202,6 +203,17 @@ namespace Rogue_II
                 }
 
             }
+            else if(e.Key == Key.P)
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    Item it = items[i];
+                    if(it.VisibleOverride==false)
+                    {
+                        it.rectangle.Visibility = Visibility.Visible;
+                    }
+                }
+            }
             else
             {
                 if (gamestate == GameState.GameOn)
@@ -219,8 +231,8 @@ namespace Rogue_II
                     for (int i = 0; i < items.Length; i++)
                     {
                         Item it = items[i];
-                        //it.ItemVisibility(player);
                         player.itemPickUp(it);
+                        it.ItemVisibility(player);
                     }
                     if (e.Key == Key.Enter)
                     {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,12 +18,12 @@ namespace Rogue_II
         Window window = new Window();
         List<Rectangle> rectangle = new List<Rectangle>();
         int mapNum;
-        enum maplist {Hoth}
+        enum maplist { Hoth }
         string line;
         string tile;
         public int xPos;
         public int yPos = 0;
-        public string[,] grid = new string[12, 5];
+        public string[,] grid = new string[12, 9];
         int lineNumber = -1;
 
         public Map(Canvas C)
@@ -51,15 +51,15 @@ namespace Rogue_II
             }
 
             //Takes the values from the grid array and creates rectangles (which represent the map) on the screen.
-            for (int y = 0; y < 5; y++)
+            for (int y = 0; y < 9; y++)
             {
                 for (int x = 0; x < 12; x++)
                 {
-                    xPos = (x * 10);
-                    yPos = (y * 10);
+                    xPos = (x * 30);
+                    yPos = (y * 30);
                     rectangle.Add(new Rectangle());
-                    rectangle[rectangle.Count - 1].Width = 10;
-                    rectangle[rectangle.Count - 1].Height = 10;
+                    rectangle[rectangle.Count - 1].Width = 30;
+                    rectangle[rectangle.Count - 1].Height = 30;
                     rectangle[rectangle.Count - 1].StrokeThickness = 1;
                     Canvas.SetLeft(rectangle[rectangle.Count - 1], xPos);
                     Canvas.SetTop(rectangle[rectangle.Count - 1], yPos);
@@ -74,7 +74,7 @@ namespace Rogue_II
                     }
                     canvas.Children.Add(rectangle[rectangle.Count - 1]);
                 }
-            }           
+            }
         }
     }
 }

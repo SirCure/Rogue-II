@@ -31,6 +31,7 @@ namespace Rogue_II
         public int HealthBoost;
         public int GoldCount;
         public bool isVisible= false;
+        public bool VisibleOverride = false;
         public Item(Canvas c, Window w,Point p,Type t,int level)
         {
             canvas = c;
@@ -83,25 +84,33 @@ namespace Rogue_II
         }
         public void ItemVisibility(Player player)
         {
-            if ((player.pos.X + 100 < pos.X || player.pos.X - 100 > pos.X) && (player.pos.Y + 100 < pos.X || player.pos.Y - 100 > pos.Y))
+            rectangle.Visibility = Visibility.Hidden;
+            Rect play = RectangleToRect(player.rectangle);
+            Rect itemr = RectangleToRect(rectangle);
+            if(play.IntersectsWith(itemr))
             {
-                isVisible = false;
+                if (VisibleOverride == false)
+                {
+                    rectangle.Visibility = Visibility.Visible;
+                }
             }
-            else
+            /*if (((player.pos.X < pos.X && player.pos.X + 100 > pos.X) || (player.pos.X > pos.X && player.pos.X - 100 < pos.X))&&((player.pos.Y < pos.Y && player.pos.Y + 100 > pos.Y) || (player.pos.Y > pos.Y && player.pos.Y - 100 < pos.Y)))
             {
-                isVisible = true;
-            }
-
-
-            if (isVisible == true)
-            {
-                rectangle.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                rectangle.Visibility = Visibility.Hidden;
-            }
+                if(VisibleOverride == false)
+                {
+                    rectangle.Visibility = Visibility.Visible;
+                }
+            }*/
         }
-        
+        public Rect RectangleToRect(Rectangle rectangle)
+        {
+            double xpos = Canvas.GetLeft(rectangle);
+            double ypos = Canvas.GetTop(rectangle);
+            Point Pos = new Point();
+            Pos.X = xpos-15;
+            Pos.Y = ypos-15;
+            return new Rect() { Width = rectangle.Width+30, Height = rectangle.Height+30, Location = Pos };
+        }
+
     }
 }

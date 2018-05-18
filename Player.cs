@@ -97,9 +97,9 @@ namespace Rogue_II
         //Changed to Item[] itemArray
         public void itemPickUp(Item item)
         {
-                if(this.pos == item.pos&&item.rectangle.Visibility == Visibility.Visible)
+                if(this.pos == item.pos&&item.VisibleOverride==false)
                 {
-                    item.rectangle.Visibility = Visibility.Hidden;
+                    item.VisibleOverride = true;
                     switch (item.type)
                     {
                         case Type.Melee:

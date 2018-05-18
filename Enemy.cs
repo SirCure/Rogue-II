@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace Rogue_II
         int levelProgress = 1;
         Window window;
         //the point where the enemy is located
-        Point enemyPos = new Point(x:1, y:1);
+        Point enemyPos = new Point(x: 1, y: 1);
         //the enemyRectangle is where the sprite will be, and there will be collision with it
         public Rectangle enemyRectangle = new Rectangle();
         //the minibossRectangle is where the mini boss sprite will be.
@@ -33,14 +33,14 @@ namespace Rogue_II
         int bossStrength;
         int armour;
         int bossArmour;
-        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("H:/My Documents/ICS3U/Unit 4/Rogue II/Rogue II/StormtrooperForward.png")));
+        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("E:/StormtrooperForward.png")));
         //higher level, more exp for player
         int level;
         int enemyType;
         bool alive = true;
-        
+
         Random random = new Random();
-        public Enemy (Canvas c, Window w)
+        public Enemy(Canvas c, Window w)
         {
             canvas = c;
             window = w;
@@ -53,7 +53,7 @@ namespace Rogue_II
             minibossRectangle.Width = 30;
             if (levelProgress == 1)
             {   //stormtrooper hoth
-                enemyRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
+                enemyRectangle.Fill = stormtSprite;
                 Canvas.SetLeft(enemyRectangle, 100);
                 hp = 10;
                 maxHP = 10;
@@ -61,7 +61,7 @@ namespace Rogue_II
                 armour = 3;
                 level = 1;
                 canvas.Children.Add(enemyRectangle);
-                enemyRectangle.Visibility = Visibility.Hidden;
+                //enemyRectangle.Visibility = Visibility.Hidden;
                 // wampa?
                 //minibossRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("wampa.png", UriKind.Relative)));
                 minibossRectangle.Fill = Brushes.Red;
@@ -72,7 +72,7 @@ namespace Rogue_II
                 bossArmour = 1;
                 level = 5;
                 canvas.Children.Add(minibossRectangle);
-                minibossRectangle.Visibility = Visibility.Hidden;
+                //minibossRectangle.Visibility = Visibility.Hidden;
             }
             if (levelProgress == 2)
             {
@@ -85,7 +85,7 @@ namespace Rogue_II
                 armour = 6;
                 level = 5;
                 canvas.Children.Add(enemyRectangle);
-                enemyRectangle.Visibility = Visibility.Hidden;
+                //enemyRectangle.Visibility = Visibility.Hidden;
                 // second miniboss
                 minibossRectangle.Fill = Brushes.Red;
                 Canvas.SetLeft(minibossRectangle, 150);
@@ -95,8 +95,8 @@ namespace Rogue_II
                 bossArmour = 11;
                 level = 10;
                 canvas.Children.Add(minibossRectangle);
-                minibossRectangle.Visibility = Visibility.Hidden;
-            
+                //minibossRectangle.Visibility = Visibility.Hidden;
+
             }
             if (levelProgress == 3)
             {
@@ -109,7 +109,7 @@ namespace Rogue_II
                 armour = 5;
                 level = 8;
                 canvas.Children.Add(enemyRectangle);
-                enemyRectangle.Visibility = Visibility.Hidden;
+                //enemyRectangle.Visibility = Visibility.Hidden;
                 //third miniboss
                 minibossRectangle.Fill = Brushes.Red;
                 Canvas.SetLeft(minibossRectangle, 150);
@@ -119,14 +119,14 @@ namespace Rogue_II
                 bossArmour = 17;
 
             }
-            
+
         }
-        
+
         public void enemyMove()
         {
-            
+
         }
-        
+
         public void death()
         {
             canvas.Children.Remove(enemyRectangle);
@@ -134,4 +134,3 @@ namespace Rogue_II
         }
     }
 }
-
