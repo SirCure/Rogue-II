@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,13 @@ namespace Rogue_II
 {
     class Enemy
     {
-        Player player;
+
         Canvas canvas;
-        Map map;
+
         int levelProgress = 1;
         Window window;
         //the point where the enemy is located
-        Point enemyPos = new Point(x: 1, y: 1);
+        Point enemyPos = new Point();
         //the enemyRectangle is where the sprite will be, and there will be collision with it
         public Rectangle enemyRectangle = new Rectangle();
         //the minibossRectangle is where the mini boss sprite will be.
@@ -33,7 +33,7 @@ namespace Rogue_II
         int bossStrength;
         int armour;
         int bossArmour;
-        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("E:/StormtrooperForward.png")));
+        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("H:/My Documents/ICS3U/Unit 4/Rogue II/Rogue II/StormtrooperForward.png")));
         //higher level, more exp for player
         int level;
         int enemyType;
@@ -51,9 +51,9 @@ namespace Rogue_II
             enemyRectangle.Width = 30;
             minibossRectangle.Height = 30;
             minibossRectangle.Width = 30;
-            if (levelProgress == 1)
+            if (levelProgress == 0)
             {   //stormtrooper hoth
-                enemyRectangle.Fill = stormtSprite;
+                enemyRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
                 Canvas.SetLeft(enemyRectangle, 100);
                 hp = 10;
                 maxHP = 10;
@@ -61,7 +61,7 @@ namespace Rogue_II
                 armour = 3;
                 level = 1;
                 canvas.Children.Add(enemyRectangle);
-                //enemyRectangle.Visibility = Visibility.Hidden;
+                // enemyRectangle.Visibility = Visibility.Hidden;
                 // wampa?
                 //minibossRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("wampa.png", UriKind.Relative)));
                 minibossRectangle.Fill = Brushes.Red;
@@ -72,9 +72,9 @@ namespace Rogue_II
                 bossArmour = 1;
                 level = 5;
                 canvas.Children.Add(minibossRectangle);
-                //minibossRectangle.Visibility = Visibility.Hidden;
+                // minibossRectangle.Visibility = Visibility.Hidden;
             }
-            if (levelProgress == 2)
+            if (levelProgress == 1)
             {
                 // second generic enemy
                 enemyRectangle.Fill = Brushes.Blue;
@@ -95,10 +95,10 @@ namespace Rogue_II
                 bossArmour = 11;
                 level = 10;
                 canvas.Children.Add(minibossRectangle);
-                //minibossRectangle.Visibility = Visibility.Hidden;
+                // minibossRectangle.Visibility = Visibility.Hidden;
 
             }
-            if (levelProgress == 3)
+            if (levelProgress == 2)
             {
                 //third generic enemy
                 enemyRectangle.Fill = Brushes.Yellow;
@@ -117,20 +117,107 @@ namespace Rogue_II
                 maxHP = 44;
                 bossStrength = 38;
                 bossArmour = 17;
+                level = 15;
 
             }
 
         }
 
-        public void enemyMove()
+        public void enemyMove(Player player)
         {
+            //Player down and right from enemy
+            if (player.pos.X > enemyPos.X && player.pos.Y > enemyPos.Y)
+            {
+                if (player.pos.X - enemyPos.X > player.pos.Y - enemyPos.Y)
+                {
+                    if (player.pos.X < enemyPos.X)
+                    {
+                        enemyPos.X -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.X += 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y < enemyPos.Y)
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y += 30;
+                    }
+                }
+
+
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            //down and left
+            if (player.pos.X <= enemyPos.X && player.pos.Y >= enemyPos.Y)
+            {
+                if (enemyPos.X - player.pos.X >= player.pos.Y - enemyPos.Y)
+                {
+                    if (player.pos.X <= enemyPos.X)
+                    {
+                        enemyPos.X -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.X += 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y <= enemyPos.Y)
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y += 30;
+                    }
+                }
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            // up and right DOESNT WORK YET
+            if (player.pos.X >= enemyPos.X && player.pos.Y <= enemyPos.Y)
+            {
+                if (enemyPos.X - player.pos.X >= player.pos.Y - enemyPos.Y)
+                {
+                    if (player.pos.X <= enemyPos.X)
+                    {
+                        enemyPos.X -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.X += 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y <= enemyPos.Y)
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y += 30;
+                    }
+                }
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
 
         }
 
-        public void death()
-        {
-            canvas.Children.Remove(enemyRectangle);
-            player.XP = player.XP + (level * 10);
+            public void death(Player player)
+            {
+                canvas.Children.Remove(enemyRectangle);
+                player.XP = player.XP + (level * 10);
+            }
         }
-    }
-}
+    } 
