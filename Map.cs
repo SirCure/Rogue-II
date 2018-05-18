@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace Rogue_II
         Window window = new Window();
         List<Rectangle> rectangle = new List<Rectangle>();
         int mapNum;
-        enum maplist { Hoth }
+        enum maplist {Hoth}
         string line;
         string tile;
         public int xPos;
@@ -55,26 +55,35 @@ namespace Rogue_II
             {
                 for (int x = 0; x < 12; x++)
                 {
-                    xPos = (x * 30);
-                    yPos = (y * 30);
+                    xPos = (x * 10);
+                    yPos = (y * 10);
                     rectangle.Add(new Rectangle());
-                    rectangle[rectangle.Count - 1].Width = 30;
-                    rectangle[rectangle.Count - 1].Height = 30;
+                    rectangle[rectangle.Count - 1].Width = 10;
+                    rectangle[rectangle.Count - 1].Height = 10;
                     rectangle[rectangle.Count - 1].StrokeThickness = 1;
                     Canvas.SetLeft(rectangle[rectangle.Count - 1], xPos);
                     Canvas.SetTop(rectangle[rectangle.Count - 1], yPos);
+
+                    //Outside the room.
                     if (grid[x, y] == ".")
+                    {
+                        rectangle[rectangle.Count - 1].Fill = Brushes.Black;
+                    }
+
+                    //Walls.
+                    if (grid[x, y] == "|")
                     {
                         rectangle[rectangle.Count - 1].Fill = Brushes.Salmon;
                     }
 
-                    if (grid[x, y] == "|")
+                    //Inside the room.
+                    if (grid[x, y] == ",")
                     {
-                        rectangle[rectangle.Count - 1].Fill = Brushes.Gray;
+                        rectangle[rectangle.Count - 1].Fill = Brushes.DarkSalmon;
                     }
                     canvas.Children.Add(rectangle[rectangle.Count - 1]);
                 }
-            }
+            }         
         }
     }
 }
