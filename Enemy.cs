@@ -101,6 +101,22 @@ namespace Rogue_II
             if (levelProgress == 3)
             {
                 //third generic enemy
+                enemyRectangle.Fill = Brushes.Yellow;
+                Canvas.SetLeft(enemyRectangle, 100);
+                hp = 33;
+                maxHP = 33;
+                strength = 30;
+                armour = 5;
+                level = 8;
+                canvas.Children.Add(enemyRectangle);
+                enemyRectangle.Visibility = Visibility.Hidden;
+                //third miniboss
+                minibossRectangle.Fill = Brushes.Red;
+                Canvas.SetLeft(minibossRectangle, 150);
+                bossHP = 44;
+                maxHP = 44;
+                bossStrength = 38;
+                bossArmour = 17;
 
             }
             
@@ -118,3 +134,4 @@ namespace Rogue_II
         }
     }
 }
+
