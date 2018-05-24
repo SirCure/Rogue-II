@@ -1,0 +1,37 @@
+E:\Rogue II\Rogue II\bin\Debug\Rogue II.exe.config
+E:\Rogue II\Rogue II\bin\Debug\Rogue II.exe
+E:\Rogue II\Rogue II\bin\Debug\Rogue II.pdb
+E:\Rogue II\Rogue II\obj\Debug\Rogue II.csprojResolveAssemblyReference.cache
+E:\Rogue II\Rogue II\obj\Debug\MainWindow.g.cs
+E:\Rogue II\Rogue II\obj\Debug\App.g.cs
+E:\Rogue II\Rogue II\obj\Debug\Rogue II_MarkupCompile.cache
+E:\Rogue II\Rogue II\obj\Debug\Rogue II_MarkupCompile.lref
+E:\Rogue II\Rogue II\obj\Debug\MainWindow.baml
+E:\Rogue II\Rogue II\obj\Debug\Rogue II.g.resources
+E:\Rogue II\Rogue II\obj\Debug\Rogue_II.Properties.Resources.resources
+E:\Rogue II\Rogue II\obj\Debug\Rogue II.csproj.GenerateResource.Cache
+E:\Rogue II\Rogue II\obj\Debug\Rogue II.csproj.CoreCompileInputs.cache
+E:\Rogue II\Rogue II\obj\Debug\Rogue II.exe
+E:\Rogue II\Rogue II\obj\Debug\Rogue II.pdb
+E:\Rogue II\Rogue II\bin\Debug\01 Star Wars Main Title And Ambush On Coruscant.mp3
+E:\Rogue II\Rogue II\bin\Debug\02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3
+E:\Rogue II\Rogue II\bin\Debug\03 Battle Of The Heroes.mp3
+E:\Rogue II\Rogue II\bin\Debug\10 Mos Eisley Spaceport.mp3
+E:\Rogue II\Rogue II\bin\Debug\11 Cantina Band.mp3
+E:\Rogue II\Rogue II\obj\Debug\Rogue II_Content.g.cs
+E:\Rogue II\Rogue II\bin\Debug\02 Duel Of The Fates.mp3
+E:\Rogue II\Rogue II\bin\Debug\12 Cantina Band #2.mp3
+E:\Rogue II\Rogue II\bin\Debug\blaster.png
+E:\Rogue II\Rogue II\bin\Debug\chest.png
+E:\Rogue II\Rogue II\bin\Debug\coll.png
+E:\Rogue II\Rogue II\bin\Debug\controls.png
+E:\Rogue II\Rogue II\bin\Debug\deathSticks.png
+E:\Rogue II\Rogue II\bin\Debug\helmet.png
+E:\Rogue II\Rogue II\bin\Debug\pants.png
+E:\Rogue II\Rogue II\bin\Debug\sword.png
+E:\Rogue II\Rogue II\bin\Debug\map0.txt
+E:\Rogue II\Rogue II\bin\Debug\brick.png
+E:\Rogue II\Rogue II\bin\Debug\@.png
+E:\Rogue II\Rogue II\bin\Debug\StormtrooperForward.png
+E:\Rogue II\Rogue II\bin\Debug\Untitledbutackbarbutwhite.png
+E:\Rogue II\Rogue II\bin\Debug\04 Emperor's Throne Room.mp3
