@@ -36,7 +36,7 @@ namespace Rogue_II
         ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("H:/My Documents/ICS3U/Unit 4/Rogue II/Rogue II/StormtrooperForward.png")));
         //higher level, more exp for player
         int level;
-        int enemyType;
+        string enemyType;
         bool alive = true;
 
         Random random = new Random();
@@ -54,7 +54,7 @@ namespace Rogue_II
             if (levelProgress == 0)
             {   //stormtrooper hoth
                 enemyRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
-                Canvas.SetLeft(enemyRectangle, 100);
+                Canvas.SetLeft(enemyRectangle, 90);
                 hp = 10;
                 maxHP = 10;
                 strength = 12;
@@ -125,12 +125,13 @@ namespace Rogue_II
 
         public void enemyMove(Player player)
         {
+            Point previousPos = enemyPos;
             //Player down and right from enemy
-            if (player.pos.X > enemyPos.X && player.pos.Y > enemyPos.Y)
+            if (player.pos.X >= enemyPos.X && player.pos.Y >= enemyPos.Y)
             {
-                if (player.pos.X - enemyPos.X > player.pos.Y - enemyPos.Y)
+                if (player.pos.X - enemyPos.X >= player.pos.Y - enemyPos.Y)
                 {
-                    if (player.pos.X < enemyPos.X)
+                    if (player.pos.X <= enemyPos.X)
                     {
                         enemyPos.X -= 30;
                     }
@@ -141,7 +142,7 @@ namespace Rogue_II
                 }
                 else
                 {
-                    if (player.pos.Y < enemyPos.Y)
+                    if (player.pos.Y <= enemyPos.Y)
                     {
                         enemyPos.Y -= 30;
                     }
@@ -183,10 +184,10 @@ namespace Rogue_II
                 Canvas.SetLeft(enemyRectangle, enemyPos.X);
                 Canvas.SetTop(enemyRectangle, enemyPos.Y);
             }
-            // up and right DOESNT WORK YET
+            // up and right 
             if (player.pos.X >= enemyPos.X && player.pos.Y <= enemyPos.Y)
             {
-                if (enemyPos.X - player.pos.X >= player.pos.Y - enemyPos.Y)
+                if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y  )
                 {
                     if (player.pos.X <= enemyPos.X)
                     {
@@ -199,19 +200,51 @@ namespace Rogue_II
                 }
                 else
                 {
-                    if (player.pos.Y <= enemyPos.Y)
+                    if (player.pos.Y >= enemyPos.Y)
                     {
-                        enemyPos.Y -= 30;
+                        enemyPos.Y += 30;
                     }
                     else
                     {
-                        enemyPos.Y += 30;
+                        enemyPos.Y -= 30;
                     }
                 }
                 Canvas.SetLeft(enemyRectangle, enemyPos.X);
                 Canvas.SetTop(enemyRectangle, enemyPos.Y);
             }
+            // up and left
+            if (player.pos.X <= enemyPos.X && player.pos.Y <= enemyPos.Y)
+            {
 
+                if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y)
+                {
+                    if (player.pos.X >= enemyPos.X)
+                    {
+                        enemyPos.X += 30;
+                    }
+                    else
+                    {
+                        enemyPos.X -= 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y >= enemyPos.Y)
+                    {
+                        enemyPos.Y += 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                }
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            /*if(enemyPos == player.pos)
+            {
+                enemyPos = previousPos;
+            }*/
         }
 
             public void death(Player player)
