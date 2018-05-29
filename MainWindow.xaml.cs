@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Rogue_II
+namespace Rogue_II_NoMusic
 {
     enum GameState { StartScreen, GameOn, BossLevel, GameOver };
     /// <summary>
@@ -23,7 +23,7 @@ namespace Rogue_II
     public partial class MainWindow : Window
     {
         GameState gamestate = GameState.StartScreen;
-        string[] songList = { "E:/13BinarySunsetAlternate/04 Emperor's Throne Room.mp3","E:/13BinarySunsetAlternate/03 Battle Of The Heroes.mp3", "E:/13BinarySunsetAlternate/02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "E:/13BinarySunsetAlternate/10 Mos Eisley Spaceport.mp3", "E:/13BinarySunsetAlternate/11 Cantina Band.mp3", "E:/13BinarySunsetAlternate/02 Duel Of The Fates.mp3", "E:/13BinarySunsetAlternate/12 Cantina Band #2.mp3" };
+        //string[] songList = { "04 Emperor's Throne Room.mp3", "03 Battle Of The Heroes.mp3", "02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "10 Mos Eisley Spaceport.mp3", "11 Cantina Band.mp3", "02 Duel Of The Fates.mp3", "12 Cantina Band #2.mp3" };
         Enemy enemy;
         Player player;
         int Level = 1;
@@ -43,6 +43,7 @@ namespace Rogue_II
         double textwidth = 800;
         int otherCounter = 0;
         bool IntroHasRun = false;
+        int keycounter = 0;
         //Intro Variables Over
 
         //UI Elements
@@ -59,16 +60,16 @@ namespace Rogue_II
         public MainWindow()
         {
             InitializeComponent();
-            if(IntroHasRun == false)
+            if (IntroHasRun == false)
             {
                 PlayIntro();
             }
-            
+
             controls = new Rectangle();
             controls.Visibility = Visibility.Hidden;
             controls.Height = 800;
             controls.Width = 1200;
-            controls.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/controls.png")));
+            controls.Fill = new ImageBrush(new BitmapImage(new Uri("controls.png", UriKind.Relative)));
             canvas.Children.Add(controls);
         }
         //Initializes and Runs the Intro- Ends with the song or the escape key
@@ -84,7 +85,7 @@ namespace Rogue_II
                 ackbar = new Rectangle();
                 ackbar.Height = height;
                 ackbar.Width = width;
-                ackbar.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Untitledbutackbarbutwhite.png")));
+                ackbar.Fill = new ImageBrush(new BitmapImage(new Uri("Untitledbutackbarbutwhite.png", UriKind.Relative)));
                 scrollingText.Height = 400;
                 scrollingText.Width = 800;
                 scrollingText.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -100,8 +101,8 @@ namespace Rogue_II
                 canvas.Children.Add(ackbar);
                 Canvas.SetLeft(ackbar, ackbarPos.X);
                 Canvas.SetTop(ackbar, ackbarPos.Y);
-                music.Open(new Uri("E:/13BinarySunsetAlternate/01 Star Wars Main Title And Ambush On Coruscant.mp3"));
-                music.Play();
+                //music.Open(new Uri("01 Star Wars Main Title And Ambush On Coruscant.mp3", UriKind.Relative));
+                //music.Play();
             }
         }
         //Runs intro at 60fps
@@ -138,9 +139,9 @@ namespace Rogue_II
                     Canvas.SetLeft(ackbar, ackbarPos.X);
                     if (Keyboard.IsKeyDown(Key.Escape))
                     {
-                        music.Stop();
-                        NextSong();
-                        music.MediaEnded += NextSongEvent;
+                        //music.Stop();
+                        //NextSong();
+                        //music.MediaEnded += NextSongEvent;
                         gamestate = GameState.GameOn;
                         scrollingText.Visibility = Visibility.Hidden;
                         ackbar.Visibility = Visibility.Hidden;
@@ -154,26 +155,26 @@ namespace Rogue_II
                     }
                 }
             }
-            
+
         }
         //Is Called when intro song ends
         private void IntroOver(object sender, EventArgs e)
         {
-            music.Stop();
-            NextSong();
-            music.MediaEnded += NextSongEvent;
+            //music.Stop();
+            //NextSong();
+            //music.MediaEnded += NextSongEvent;
             gamestate = GameState.GameOn;
             scrollingText.Visibility = Visibility.Hidden;
             ackbar.Visibility = Visibility.Hidden;
             player.rectangle.Visibility = Visibility.Visible;
         }
-        private void NextSong()
+        /*private void NextSong()
         {
             music.Stop();
             int id = r.Next(0, songList.Length);
             string songLink = songList[id];
             window.Title = songLink;
-            music.Open(new Uri(songLink));
+            music.Open(new Uri((songLink), UriKind.Relative));
             music.Play();
         }
         private void NextSongEvent(object sender, EventArgs e)
@@ -182,13 +183,23 @@ namespace Rogue_II
             int random = r.Next(0, songList.Length);
             string songLink = songList[random];
             window.Title = songLink;
-            music.Open(new Uri(songLink));
+            music.Open(new Uri((songLink), UriKind.Relative));
             music.Play();
-        }
+        }*/
 
         //Everything happens on a KeyDown Event
-        private void key(object sender,KeyEventArgs e)
+        private void key(object sender, KeyEventArgs e)
         {
+            keycounter++;
+            if(keycounter==25)
+            {
+                keycounter = 0;
+                if(player.HP<player.MaxHP)
+                {
+                    player.HP += 1;
+                }
+                
+            }
             if (e.Key == Key.F1)
             {
                 if (controls.Visibility == Visibility.Hidden)
@@ -203,12 +214,12 @@ namespace Rogue_II
                 }
 
             }
-            else if(e.Key == Key.P)
+            else if (e.Key == Key.P)
             {
                 for (int i = 0; i < items.Length; i++)
                 {
                     Item it = items[i];
-                    if(it.VisibleOverride==false)
+                    if (it.VisibleOverride == false)
                     {
                         it.rectangle.Visibility = Visibility.Visible;
                     }
@@ -236,29 +247,35 @@ namespace Rogue_II
                     }
                     if (e.Key == Key.Enter)
                     {
-                        NextSong();
+                        //NextSong();
                     }
                     //Console.WriteLine("KeyDown Event" + e.Key.ToString());
                     player.move(e.Key);
-                    screenUpdate();
+                    map.mapCollide(player);
+                    enemy.enemyMove(player);
+                    map.mapCollide(enemy);
+                    player.melee(enemy, lblCombat, lblCombatEnemy);
                     player.XPUpdate();
+                    player.death(lblCombat);
+                    screenUpdate();
+
                 }
             }
         }
         private void GenerateItems()
         {
-            for(int i = 0;i<items.Length;i++)
+            for (int i = 0; i < items.Length; i++)
             {
                 Type type = (Type)r.Next(0, 7);
-                if (i==1)
+                if (i == 1)
                 {
                     type = Type.Melee;
                 }
-                else if(i==0)
+                else if (i == 0)
                 {
                     type = Type.Collectible;
                 }
-                Point itempos = new Point(r.Next(0, 30)*30, r.Next(0,20)*30);
+                Point itempos = new Point(r.Next(0, 30) * 30, r.Next(0, 20) * 30);
                 items[i] = new Item(canvas, this, itempos, type, Level);
             }
         }

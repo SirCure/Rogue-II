@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,35 +9,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Rogue_II
+namespace Rogue_II_NoMusic
 {
     class Enemy
     {
-
+        
         Canvas canvas;
-
+        Map map;
         int levelProgress = 1;
         Window window;
         //the point where the enemy is located
-        Point enemyPos = new Point();
+        public Point enemyPos = new Point(120,90);
         //the enemyRectangle is where the sprite will be, and there will be collision with it
         public Rectangle enemyRectangle = new Rectangle();
         //the minibossRectangle is where the mini boss sprite will be.
         public Rectangle minibossRectangle = new Rectangle();
+        public Point bossPos = new Point(1050,480);
         //these ints are for enemy stats
-        int hp;
-        int bossHP;
-        int maxHP;
-        int bossMaxHP;
-        int strength;
-        int bossStrength;
-        int armour;
-        int bossArmour;
-        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("H:/My Documents/ICS3U/Unit 4/Rogue II/Rogue II/StormtrooperForward.png")));
+        public int hp;
+        public int bossHP;
+        public int maxHP;
+        public int bossMaxHP;
+        public int strength;
+        public int bossStrength;
+        public int armour;
+        public int bossArmour;
+        public int bosslevel;
+        ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
         //higher level, more exp for player
-        int level;
-        string enemyType;
-        bool alive = true;
+        public int level;
+        public string enemyType;
+        public bool alive = true;
+        public Point previousPos;
 
         Random random = new Random();
         public Enemy(Canvas c, Window w)
@@ -51,30 +54,33 @@ namespace Rogue_II
             enemyRectangle.Width = 30;
             minibossRectangle.Height = 30;
             minibossRectangle.Width = 30;
-            if (levelProgress == 0)
+            if (levelProgress == 1)
             {   //stormtrooper hoth
-                enemyRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
-                Canvas.SetLeft(enemyRectangle, 90);
+                enemyType = "Stormtrooper";
+                enemyRectangle.Fill = stormtSprite;
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
                 hp = 10;
                 maxHP = 10;
                 strength = 12;
                 armour = 3;
                 level = 1;
                 canvas.Children.Add(enemyRectangle);
-                // enemyRectangle.Visibility = Visibility.Hidden;
+                //enemyRectangle.Visibility = Visibility.Hidden;
                 // wampa?
                 //minibossRectangle.Fill = new ImageBrush(new BitmapImage(new Uri("wampa.png", UriKind.Relative)));
                 minibossRectangle.Fill = Brushes.Red;
-                Canvas.SetLeft(minibossRectangle, 150);
+                Canvas.SetLeft(minibossRectangle, bossPos.X);
+                Canvas.SetTop(minibossRectangle, bossPos.Y);
                 bossHP = 18;
                 bossMaxHP = 18;
                 bossStrength = 17;
                 bossArmour = 1;
-                level = 5;
+                bosslevel = 4;
                 canvas.Children.Add(minibossRectangle);
-                // minibossRectangle.Visibility = Visibility.Hidden;
+                //minibossRectangle.Visibility = Visibility.Hidden;
             }
-            if (levelProgress == 1)
+            if (levelProgress == 2)
             {
                 // second generic enemy
                 enemyRectangle.Fill = Brushes.Blue;
@@ -95,10 +101,10 @@ namespace Rogue_II
                 bossArmour = 11;
                 level = 10;
                 canvas.Children.Add(minibossRectangle);
-                // minibossRectangle.Visibility = Visibility.Hidden;
+                //minibossRectangle.Visibility = Visibility.Hidden;
 
             }
-            if (levelProgress == 2)
+            if (levelProgress == 3)
             {
                 //third generic enemy
                 enemyRectangle.Fill = Brushes.Yellow;
@@ -117,7 +123,6 @@ namespace Rogue_II
                 maxHP = 44;
                 bossStrength = 38;
                 bossArmour = 17;
-                level = 15;
 
             }
 
@@ -125,7 +130,7 @@ namespace Rogue_II
 
         public void enemyMove(Player player)
         {
-            Point previousPos = enemyPos;
+            previousPos = enemyPos;
             //Player down and right from enemy
             if (player.pos.X >= enemyPos.X && player.pos.Y >= enemyPos.Y)
             {
@@ -157,7 +162,7 @@ namespace Rogue_II
                 Canvas.SetTop(enemyRectangle, enemyPos.Y);
             }
             //down and left
-            if (player.pos.X <= enemyPos.X && player.pos.Y >= enemyPos.Y)
+            else if (player.pos.X <= enemyPos.X && player.pos.Y >= enemyPos.Y)
             {
                 if (enemyPos.X - player.pos.X >= player.pos.Y - enemyPos.Y)
                 {
@@ -185,9 +190,9 @@ namespace Rogue_II
                 Canvas.SetTop(enemyRectangle, enemyPos.Y);
             }
             // up and right 
-            if (player.pos.X >= enemyPos.X && player.pos.Y <= enemyPos.Y)
+            else if (player.pos.X >= enemyPos.X && player.pos.Y <= enemyPos.Y)
             {
-                if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y  )
+                if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y)
                 {
                     if (player.pos.X <= enemyPos.X)
                     {
@@ -213,7 +218,7 @@ namespace Rogue_II
                 Canvas.SetTop(enemyRectangle, enemyPos.Y);
             }
             // up and left
-            if (player.pos.X <= enemyPos.X && player.pos.Y <= enemyPos.Y)
+            else if (player.pos.X <= enemyPos.X && player.pos.Y <= enemyPos.Y)
             {
 
                 if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y)
@@ -247,10 +252,17 @@ namespace Rogue_II
             }*/
         }
 
-            public void death(Player player)
-            {
-                canvas.Children.Remove(enemyRectangle);
-                player.XP = player.XP + (level * 10);
-            }
+        public void death()
+        {
+            canvas.Children.Remove(enemyRectangle);
+            alive = false;
+            //player.XP = player.XP + (level * 10);
         }
-    } 
+        public void bossdeath()
+        {
+            canvas.Children.Remove(minibossRectangle);
+            //Level Win Screen
+            //Next Level
+        }
+    }
+}

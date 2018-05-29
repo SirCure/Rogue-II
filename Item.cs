@@ -13,9 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-namespace Rogue_II
+namespace Rogue_II_NoMusic
 {
-    enum Type {Melee,Ranged,Helmet,Pants,Gold,Chestplate,Consumable,Collectible}
+    enum Type { Melee, Ranged, Helmet, Pants, Gold, Chestplate, Consumable, Collectible }
     class Item
     {
         Random r = new Random();
@@ -30,9 +30,9 @@ namespace Rogue_II
         public int ArmourBoost;
         public int HealthBoost;
         public int GoldCount;
-        public bool isVisible= false;
+        public bool isVisible = false;
         public bool VisibleOverride = false;
-        public Item(Canvas c, Window w,Point p,Type t,int level)
+        public Item(Canvas c, Window w, Point p, Type t, int level)
         {
             canvas = c;
             window = w;
@@ -47,35 +47,35 @@ namespace Rogue_II
             switch (type)
             {
                 case Type.Melee:
-                    StrBoost = r.Next(level , (level+1)^ 2+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/sword.png")));
+                    StrBoost = r.Next(level, (level + 1) ^ 2 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("sword.png", UriKind.Relative)));
                     break;
                 case Type.Ranged:
-                    RangedDmg = r.Next(level, level * 3+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/blaster.png")));
+                    RangedDmg = r.Next(level, level * 3 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("blaster.png", UriKind.Relative)));
                     break;
                 case Type.Helmet:
-                    ArmourBoost = r.Next(level, level * 2+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/helmet.png")));
+                    ArmourBoost = r.Next(level, level * 2 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("helmet.png", UriKind.Relative)));
                     break;
                 case Type.Pants:
-                    ArmourBoost = r.Next(level, level * 2+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/pants.png")));
+                    ArmourBoost = r.Next(level, level * 2 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("pants.png", UriKind.Relative)));
                     break;
                 case Type.Chestplate:
-                    ArmourBoost = r.Next(level, level * 2+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/chest.png")));
+                    ArmourBoost = r.Next(level, level * 2 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("chest.png", UriKind.Relative)));
                     break;
                 case Type.Consumable:
-                    HealthBoost = r.Next(level, level * 5+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/deathSticks.png")));
+                    HealthBoost = r.Next(level, level * 5 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("deathSticks.png", UriKind.Relative)));
                     break;
                 case Type.Gold:
-                    GoldCount = r.Next(level * 2, level ^ 3+1);
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/shitbrick.png")));
+                    GoldCount = r.Next(level * 2, level ^ 3 + 1);
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("brick.png", UriKind.Relative)));
                     break;
                 case Type.Collectible:
-                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("E:/Rogue-II-Images/coll.png")));
+                    rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("coll.png", UriKind.Relative)));
                     break;
                 default:
                     break;
@@ -87,7 +87,7 @@ namespace Rogue_II
             rectangle.Visibility = Visibility.Hidden;
             Rect play = RectangleToRect(player.rectangle);
             Rect itemr = RectangleToRect(rectangle);
-            if(play.IntersectsWith(itemr))
+            if (play.IntersectsWith(itemr))
             {
                 if (VisibleOverride == false)
                 {
@@ -107,9 +107,9 @@ namespace Rogue_II
             double xpos = Canvas.GetLeft(rectangle);
             double ypos = Canvas.GetTop(rectangle);
             Point Pos = new Point();
-            Pos.X = xpos-15;
-            Pos.Y = ypos-15;
-            return new Rect() { Width = rectangle.Width+30, Height = rectangle.Height+30, Location = Pos };
+            Pos.X = xpos - 15;
+            Pos.Y = ypos - 15;
+            return new Rect() { Width = rectangle.Width + 30, Height = rectangle.Height + 30, Location = Pos };
         }
 
     }
